@@ -56,13 +56,29 @@ while ($userMoney < $selectedProduct->price) {
         $userMoney += formatEur($userCoins);
         echo "You have inserted {$userMoney} eur". PHP_EOL;
         echo "Please enter your coins: ";
+    if($userMoney >= $selectedProduct ->price){
+            echo "Thank you for purchasing, here is your {$selectedProduct->name}" . PHP_EOL;
+        }
 }
-//Īsti līdz galam kaut kas nestrādā. :(((
-//Neesmu pārliecināta, kā dabūt to, lai izvada atlikumu monētās. :((
 
 $change = $userMoney-$selectedProduct->price;
 
-echo "Thank you for purchasing {$selectedProduct -> name}, here is your change: " . formatEur($change) . "eur" . PHP_EOL;
+echo "Here is your change: " . formatEur($change) . "eur" . PHP_EOL;
+while($change >0) {
+    foreach ($coins as $coin=>$amount){
+        if($amount <= 0){
+            continue;
+        }
+        $coinAmount = intdiv($change, $coin);
+        $coins[$coin] -= $coinAmount;
 
+        $x = $amount - $coinAmount;
 
+        if($x < 0) $coinAmount -= $x;
 
+        if($coinAmount > 0){
+            $change -= $coin*$coinAmount;
+            echo "Your coins: " .formatEur($coin) . " eur x {$coinAmount}" . PHP_EOL;
+        }
+    }
+}
