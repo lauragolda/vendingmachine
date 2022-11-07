@@ -58,33 +58,11 @@ while ($userMoney < $selectedProduct->price) {
         echo "Please enter your coins: ";
 }
 //Īsti līdz galam kaut kas nestrādā. :(((
+//Neesmu pārliecināta, kā dabūt to, lai izvada atlikumu monētās. :((
 
 $change = $userMoney-$selectedProduct->price;
 
 echo "Thank you for purchasing {$selectedProduct -> name}, here is your change: " . formatEur($change) . "eur" . PHP_EOL;
-foreach (array_keys($coins) as $coin) {
-    $coinsAmount = intdiv($change, $coin);
-    if ($coinsAmount > 0 && $coins[$coin] > 0) {
-        if ($coins[$coin] >= $coinsAmount) {
-            if ($coin >= 300) {
-                echo "({$coinsAmount}x) " . formatEur($coin) . " eur" . PHP_EOL;
-            } else {
-                echo "({$coinsAmount}x) {$coin} eur" . PHP_EOL;
-            }
-            $coins[$coin] -= $coinsAmount;
-            $change -= $coin * $coinsAmount;
-            $coinsAmount = 0;
-        }
-        if ($coinsAmount > 0 && $coins[$coin] !== 0) {
-            echo " > (" . $coins[$coin] . "x) {$coin} eur" . PHP_EOL;
-            $change -= $coin * $coins[$coin];
-            $coins[$coin] = 0;
-        }
-    }
-    if ($change <= 0) {
-        return;
-    }
-}
-echo $change > 0 ? "Not enough coins, Im keeping the rest. :))" . PHP_EOL : null;
+
 
 
